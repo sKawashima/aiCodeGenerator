@@ -67,12 +67,14 @@ Please output the source code in an executable language, with supplementary expl
     // コードを生成または更新
     const responce = await generateCode(prompt);
 
-    const responceJson = JSON.parse(responce);
+    try{
 
-    code = responceJson.code;
-    const advice = responceJson.advice;
+      const responceJson = JSON.parse(responce);
 
-const terminalOutput = `
+      code = responceJson.code;
+      const advice = responceJson.advice;
+
+      const terminalOutput = `
 SYSTEM>コード：
 
 ${code}
@@ -81,8 +83,13 @@ SYSTEM>${advice}
 
 SYSTEM> 他にリクエストはありますか？終了させる場合は'quit'と入力してください。
 `
-    // 生成または更新されたコードを出力
-    console.log(terminalOutput);
+      // 生成または更新されたコードを出力
+      console.log(terminalOutput);
+    }catch(e){
+      console.log(responce)
+      console.log(e);
+      console.log('SYSTEM> Jsonのパースに失敗しました。再度入力してください。')
+    }
   }
 
   rl.close();
