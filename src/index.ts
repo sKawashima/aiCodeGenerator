@@ -77,8 +77,7 @@ SYSTEM>コード：
 
 ${code}
 
-SYSTEM>アドバイス：
-${advice}
+SYSTEM>${advice}
 
 SYSTEM> 他にリクエストはありますか？終了させる場合は'quit'と入力してください。
 `
