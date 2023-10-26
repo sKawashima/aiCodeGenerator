@@ -1,9 +1,12 @@
 import { OpenAI } from 'openai';
 import readline from 'readline';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // OpenAI APIキーを設定
 const openai = new OpenAI({
-  apiKey: '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', // defaults to process.env["OPENAI_API_KEY"]
+  apiKey: process.env["OPENAI_API_KEY"]
 });
 
 const rl = readline.createInterface({
@@ -29,10 +32,11 @@ async function generateCode(prompt: string) {
 
 async function main() {
   let code = '';
+  console.log('SYSTEM> 何のコードを生成しますか？')
   while (true) {
     // ユーザーからの入力を受け取る
     const userInput = await new Promise(resolve => {
-      rl.question('What code do you want to generate or update? \n', resolve);
+      rl.question('YOU>', resolve);
     }) as string;
 
     // 入力が'quit'の場合、ループを終了
@@ -69,13 +73,14 @@ Please output the source code in an executable language, with supplementary expl
     const advice = responceJson.advice;
 
 const terminalOutput = `
-コード：
+SYSTEM>コード：
+
 ${code}
 
-アドバイス：
+SYSTEM>アドバイス：
 ${advice}
 
-#####################
+SYSTEM> 他にリクエストはありますか？終了させる場合は'quit'と入力してください。
 `
     // 生成または更新されたコードを出力
     console.log(terminalOutput);
