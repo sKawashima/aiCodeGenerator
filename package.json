@@ -1,0 +1,13 @@
+{
+  "name": "aiCodeGenerator",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
