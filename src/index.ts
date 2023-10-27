@@ -36,7 +36,7 @@ async function main() {
   while (true) {
     // ユーザーからの入力を受け取る
     const userInput = await new Promise(resolve => {
-      rl.question('YOU>', resolve);
+      rl.question('YOU> ', resolve);
     }) as string;
 
     // 入力が'quit'の場合、ループを終了
@@ -64,34 +64,33 @@ Please use \\n for line breaks so that they can be parsed by Json.parse.
 Please output the source code in an executable language, with supplementary explanations in Japanese.
 `
 
-    // コードを生成または更新
+    const outputResponce = async () => {
+      try{
     const responce = await generateCode(prompt);
+    const responceJson = JSON.parse(responce);
 
-    try{
+    code = responceJson.code;
+    const advice = responceJson.advice;
 
-      const responceJson = JSON.parse(responce);
-
-      code = responceJson.code;
-      const advice = responceJson.advice;
-
-      const terminalOutput = `
-SYSTEM>コード：
+    const terminalOutput = `
+SYSTEM> コード：
 
 ${code}
 
-SYSTEM>${advice}
+SYSTEM> ${advice}
 
 SYSTEM> 他にリクエストはありますか？終了させる場合は'quit'と入力してください。
 `
-      // 生成または更新されたコードを出力
-      console.log(terminalOutput);
-    }catch(e){
-      console.log(responce)
-      console.log(e);
-      console.log('SYSTEM> Jsonのパースに失敗しました。再度入力してください。')
+    // 生成または更新されたコードを出力
+    console.log(terminalOutput);
+      }catch{
+        console.log('SYSTEM> エラー。リトライします。')
+        await outputResponce()
+      }
     }
-  }
 
+    await outputResponce()
+  }
   rl.close();
 }
 
