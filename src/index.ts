@@ -23,7 +23,7 @@ async function generateCode(prompt: string) {
   const response = await openai.chat.completions.create({
     model: "gpt-4",
     messages: [{role: 'system', content: SYSTEM_PROMPT },{role: 'user', content: prompt }],
-    temperature: 0.5,
+    temperature: 0.1,
   });
 
   // 生成されたコードを返す
